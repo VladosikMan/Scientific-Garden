@@ -4,6 +4,7 @@ sys.path.insert(1, 'gui')
 
 from http_client import Client_http
 from http_client_google import Client_http_google
+from http_client_arvix import Client_http_arvix
 from client_local import Client_local 
 from main_fragment import Main_fragment_gui
  
@@ -13,13 +14,25 @@ def main():
 	params = {
 		"engine": "google_scholar",
 		"q": "coffe",
-	    "api_key": "52060e9b662f6e470813ce9b9e689caa8d32e5d930b15ac042452c66baea664b"
+       "api_key": "52060e9b662f6e470813ce9b9e689caa8d32e5d930b15ac042452c66baea664b"
     }
 	uri = ""
 	google_client.get_method(uri, params)
-	
+
+def test_arvix():
+    print("Дайте arvix.")
+    arvix_client = Client_http_arvix()
+    url_arvix = 'http://export.arxiv.org/api/query'
+    arvix_params = {
+        'search_query': 'all:"machine learning" OR all:"deep learning"',
+        'start': 0, 
+        'max_results': 10
+    }
+    arvix_client.get_method(url_arvix, arvix_params)
+
 def start_gui():
 	main_fragment_gui = Main_fragment_gui()
-	
+
 #main()
-start_gui()
+test_arvix()
+#start_gui()
