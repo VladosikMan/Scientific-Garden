@@ -7,3 +7,7 @@ class Scientific_api(object):
         self.type = "Тип"
         self.link = "Ссылка"
         self.data 
+    
+    @staticmethod
+    def convert_google_to_scientific_api(params):
+        pass
