@@ -1,4 +1,5 @@
 anyio==3.7.0
+art==6.0
 certifi==2023.5.7
 charset-normalizer==3.1.0
 customtkinter==5.2.0
