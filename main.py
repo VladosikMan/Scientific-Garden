@@ -1,10 +1,12 @@
 import sys
 sys.path.insert(0, 'http')
+sys.path.insert(1, 'gui')
 
 from http_client import Client_http
 from http_client_google import Client_http_google
 from client_local import Client_local 
-
+from main_fragment import Main_fragment_gui
+ 
 def main():
 	print("Дайте печенье.")
 	google_client = Client_http_google()
@@ -16,4 +18,8 @@ def main():
 	uri = ""
 	google_client.get_method(uri, params)
 	
-main()
+def start_gui():
+	main_fragment_gui = Main_fragment_gui()
+	
+#main()
+start_gui()
