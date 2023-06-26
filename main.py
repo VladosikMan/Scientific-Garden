@@ -1,13 +1,15 @@
 import sys
 sys.path.insert(0, 'http')
 sys.path.insert(1, 'gui')
+sys.path.insert(2, 'parser')
 
 from http_client import Client_http
 from http_client_google import Client_http_google
 from http_client_arvix import Client_http_arvix
 from client_local import Client_local 
 from main_fragment import Main_fragment_gui
- 
+from parser import Parser
+
 def main():
 	print("Дайте печенье.")
 	google_client = Client_http_google()
@@ -33,6 +35,13 @@ def test_arvix():
 def start_gui():
 	main_fragment_gui = Main_fragment_gui()
 
+def test_parcer():
+    parser = Parser()
+    folder = "article"
+    search_string = "INTRODUCTION" 
+    parser.search_files(search_string)
+
 #main()
-test_arvix()
+#test_arvix()
 #start_gui()
+test_parcer()
