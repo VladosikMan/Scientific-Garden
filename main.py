@@ -8,7 +8,7 @@ from http_client_google import Client_http_google
 from http_client_arvix import Client_http_arvix
 from client_local import Client_local 
 from main_fragment import Main_fragment_gui
-from parser import Parser
+from pars import Parser
 
 def main():
 	print("Дайте печенье.")
@@ -39,7 +39,9 @@ def test_parcer():
     parser = Parser()
     folder = "article"
     search_string = "INTRODUCTION" 
-    parser.search_files(search_string)
+    print(parser.search_string("INTRODUCTION"))
+    print(parser.search_name_article("asd"))
+    print(parser.search_category('h_index', "1"))
 
 #main()
 #test_arvix()
