@@ -9,15 +9,20 @@ from api_json import Scientific_api
 class Element_frame(customtkinter.CTkFrame):
     def __init__(self, master, value):
         super().__init__(master, bg_color="yellow")
-        self.grid_columnconfigure(0, weight=1)
-        self.article_title = customtkinter.CTkLabel(self, text=value.title,text_color="yellow", font=("Courier", 24))
+        self.grid_columnconfigure(0)
+        print(value.title)
+        
+        self.article_title = customtkinter.CTkLabel(self, text=value.title,text_color="yellow", font=("Courier", 16))   
         self.type = customtkinter.CTkLabel(self,text=value.type)
         self.authors = customtkinter.CTkLabel(self,text=value.authors)
        
         self.link = customtkinter.CTkLabel(self,text=value.link)
-        self.summary = customtkinter.CTkLabel(self,text=value.summary)
+        self.summary = customtkinter.CTkTextbox(self,width=600)
         
-        self.article_title.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="w")
+        self.summary.insert("1.0", value.summary, None)
+
+        
+        self.article_title.grid(row=0, column=0, sticky="w")
         self.type.grid(row=1, column=0, padx=10, pady=(10, 0), sticky="w")
         self.authors.grid(row=2, column=0, padx=10, pady=(10, 0), sticky="w")
         self.link.grid(row=3, column=0, padx=10, pady=(10, 0), sticky="w")
@@ -68,22 +73,22 @@ class  Params_frame(customtkinter.CTkFrame):
         super().__init__(master, bg_color="red")
         
         self.label_google = customtkinter.CTkLabel(self, text="Google API parameters")
-        self.label_google.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="w")
+        self.label_google.grid(row=0, column=0, padx=10, pady=(10, 0))
 
         self.label_1= customtkinter.CTkLabel(self, text="Года")
-        self.label_1.grid(row=1, column=0, padx=10, pady=(10, 0), sticky="w")
+        self.label_1.grid(row=1, column=0, padx=10, pady=(10, 0))
         self.entry_year_1= customtkinter.CTkEntry(self)
-        self.entry_year_1.grid(row=2, column=0, sticky="w")
+        self.entry_year_1.grid(row=2, column=0)
         self.entry_year_2= customtkinter.CTkEntry(self)
-        self.entry_year_2.grid(row=2, column=1, sticky="w")
+        self.entry_year_2.grid(row=2, column=1)
 
 
 class  Main_frame(customtkinter.CTkFrame):
     def __init__(self, master):
         super().__init__(master, bg_color="white")
 
-        self.grid_columnconfigure(0, weight=8)
-        self.grid_columnconfigure(1, weight=2)
+        self.grid_columnconfigure(0, weight=99)
+        self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(0, weight=99)
         self.grid_rowconfigure(1, weight=1)
 
@@ -99,10 +104,13 @@ class  Main_frame(customtkinter.CTkFrame):
     def search_line_get(self):
         print(self.search_line_frame.edit_request.get())
         if(self.search_line_frame.edit_request.get()!=""):
+
             params = {
                  "engine": "google_scholar",
                    "q": self.search_line_frame.edit_request.get(),
-                   "api_key": "52060e9b662f6e470813ce9b9e689caa8d32e5d930b15ac042452c66baea664b"
+                   "api_key": "52060e9b662f6e470813ce9b9e689caa8d32e5d930b15ac042452c66baea664b",
+                   "as_ylo": self.params_frame.entry_year_1.get(),
+                   "as_yhi": self.params_frame.entry_year_2.get()
                    }
             result = self.master.app_client.get_google_request(params)
             self.update_list(result)
