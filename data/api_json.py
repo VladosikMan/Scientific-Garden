@@ -6,9 +6,27 @@ class Scientific_api(object):
         self.authors = "Авторы"
         self.type = "Тип"
         self.link = "Ссылка"
-        self.data 
+        #convert_google_to_scientific_apiself.data 
         
     
     @staticmethod
-    def convert_google_to_scientific_api(params):
-        pass
+    def convert_google_to_scientific_api(result):
+        list_api = []
+        for i, value in enumerate(result):
+            print(value)
+            sc_api = Scientific_api()
+           
+            sc_api.title = value['title']
+            sc_api.authors = value['publication_info']
+            sc_api.link = value['link']
+            try:
+                sc_api.type = value['type']
+            except Exception:
+                pass
+            sc_api.summary = value['snippet']
+            list_api.append(sc_api)
+        
+        print(len(list_api))
+        print("ГРутьс")
+        return list_api
+        
