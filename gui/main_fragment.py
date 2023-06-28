@@ -1,7 +1,8 @@
 import sys
 sys.path.insert(0, 'http')
 sys.path.insert(1, 'data')
-
+import webbrowser
+import urllib.request
 import customtkinter 
 from constants import Constants
 from app_client import App_http_client
@@ -17,16 +18,24 @@ class Element_frame(customtkinter.CTkFrame):
         self.authors = customtkinter.CTkLabel(self,text=value.authors)
        
         self.link = customtkinter.CTkLabel(self,text=value.link)
+
+        self.link.bind("<Button-1>", function_kek)
         self.summary = customtkinter.CTkTextbox(self,width=600)
         
         self.summary.insert("1.0", value.summary, None)
-
         
         self.article_title.grid(row=0, column=0, sticky="w")
         self.type.grid(row=1, column=0, padx=10, pady=(10, 0), sticky="w")
         self.authors.grid(row=2, column=0, padx=10, pady=(10, 0), sticky="w")
         self.link.grid(row=3, column=0, padx=10, pady=(10, 0), sticky="w")
         self.summary.grid(row=4, column=0, padx=10, pady=(10, 0), sticky="w")
+        
+def function_kek(event):
+        label_text = event.widget.cget("text")
+        print(label_text)
+        webbrowser.open(label_text,1)
+        urllib.request.urlretrieve(label_text, "file")
+        pass
 
 
 class Settings_frame(customtkinter.CTkFrame):
