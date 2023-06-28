@@ -13,7 +13,7 @@ class Scientific_api(object):
     def convert_google_to_scientific_api(result):
         list_api = []
         for i, value in enumerate(result):
-            print(value)
+            #print(value)
             sc_api = Scientific_api()
            
             sc_api.title = value['title']

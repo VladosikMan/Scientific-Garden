@@ -28,10 +28,8 @@ class Settings_frame(customtkinter.CTkFrame):
     def __init__(self, master):
         super().__init__(master, bg_color="yellow")
 
-        self.buttont = customtkinter.CTkButton(self, text=" 1")
+        self.buttont = customtkinter.CTkButton(self, text="Выход")
         self.buttont.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="w")
-        self.buttont2 = customtkinter.CTkButton(self, text="checkbox 2")
-        self.buttont2.grid(row=1, column=0, padx=10, pady=(10, 0), sticky="w")
 
 
 class  Search_line_frame(customtkinter.CTkFrame):
@@ -41,7 +39,7 @@ class  Search_line_frame(customtkinter.CTkFrame):
         self.grid_columnconfigure(0, weight=8)
         self.grid_columnconfigure(0, weight=2)
         self.grid_rowconfigure(0, weight=1)
-        self.edit_request = customtkinter.CTkTextbox(self, height=20)
+        self.edit_request = customtkinter.CTkEntry(self, height=20)
         self.edit_request.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="we")
         self.buttont_request= customtkinter.CTkButton(self, text="Поиск", command=master.search_line_get)
         self.buttont_request.grid(row=0, column=1, padx=10, pady=(10, 0))
@@ -59,7 +57,6 @@ class List_result_frame(customtkinter.CTkScrollableFrame):
 
         for i, value in enumerate(self.values):
             element_frame = Element_frame(self, value)
-        
             element_frame.grid(row=i, column=0, padx=10, pady=(10, 0), sticky="nsew")
             self.checkboxes.append(element_frame)
 
@@ -70,10 +67,15 @@ class  Params_frame(customtkinter.CTkFrame):
     def __init__(self, master):
         super().__init__(master, bg_color="red")
         
-        self.buttont = customtkinter.CTkButton(self, text="checkbox 1")
-        self.buttont.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="w")
-        self.buttont2 = customtkinter.CTkButton(self, text="checkbox 2")
-        self.buttont2.grid(row=1, column=0, padx=10, pady=(10, 0), sticky="w")
+        self.label_google = customtkinter.CTkLabel(self, text="Google API parameters")
+        self.label_google.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="w")
+
+        self.label_1= customtkinter.CTkLabel(self, text="Года")
+        self.label_1.grid(row=1, column=0, padx=10, pady=(10, 0), sticky="w")
+        self.entry_year_1= customtkinter.CTkEntry(self)
+        self.entry_year_1.grid(row=2, column=0, sticky="w")
+        self.entry_year_2= customtkinter.CTkEntry(self)
+        self.entry_year_2.grid(row=2, column=1, sticky="w")
 
 
 class  Main_frame(customtkinter.CTkFrame):
@@ -95,20 +97,20 @@ class  Main_frame(customtkinter.CTkFrame):
         self.search_line_frame.grid(row=1, column=0, sticky="nsew", columnspan=2)
     
     def search_line_get(self):
-        print("zpizpl")
-        params = {
-            "engine": "google_scholar",
-            "q": "cnc",
-            "api_key": "52060e9b662f6e470813ce9b9e689caa8d32e5d930b15ac042452c66baea664b"
-        }
-        result = self.master.app_client.get_google_request(params)
-        print(result)
-        self.update_list(result)
+        print(self.search_line_frame.edit_request.get())
+        if(self.search_line_frame.edit_request.get()!=""):
+            params = {
+                 "engine": "google_scholar",
+                   "q": self.search_line_frame.edit_request.get(),
+                   "api_key": "52060e9b662f6e470813ce9b9e689caa8d32e5d930b15ac042452c66baea664b"
+                   }
+            result = self.master.app_client.get_google_request(params)
+            self.update_list(result)
 
     def update_list(self,result):
 
         list_value = Scientific_api.convert_google_to_scientific_api(result)
-        print(len(list_value))
+        #print(len(list_value))
         self.list_result_frame.destroy
 
         self.list_result_frame = List_result_frame(self, title="Element", values=list_value)
