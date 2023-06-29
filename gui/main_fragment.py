@@ -51,6 +51,7 @@ class Article_fragment(customtkinter.CTk):
     def save_article(self):
         parser.df.loc[len(parser.df.index )] = [self.author_entry.get(),self.title_entry.get(),self.data_entry.get(),self.h_entry.get()]
         print(parser.df)
+        parser.save_df()
         webbrowser.open(self.url,1)
         urllib.request.urlretrieve(self.url, f"article/{self.title_entry.get()}.pdf")
         self.destroy()

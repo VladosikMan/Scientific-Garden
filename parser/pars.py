@@ -12,14 +12,23 @@ norm_coeff = 0.60
 
 class Parser(object):
     def __init__(self):
+        self.df = pd.read_pickle('dataframe.pickle')
+        print(self.df)
         pass
     # Основной словарь которы йдолжен обновлятся по мере скачивания записей с помощью парсера и заполнять вручную если статьи скачали сами
-    df = pd.DataFrame({
-        'author': ['AA', 'BB', 'AA', 'DD'],
-        'name_article': ["asd", "asdf", "asdff", "asdfff"],
-        'data': ["12.06.05", "12.04.54", "1.02.3", "12.312.21"],
-        'h_index' :["1","2","3","4"]
-    })
+    #df = pd.DataFrame({
+    #    'author': ['AA', 'BB', 'AA', 'DD'],
+    #    'name_article': ["asd", "asdf", "asdff", "asdfff"],
+    #    'data': ["12.06.05", "12.04.54", "1.02.3", "12.312.21"],
+    #    'h_index' :["1","2","3","4"]
+    #})
+
+    #df.to_pickle('dataframe.pickle')
+    #df = pd.read_pickle('dataframe.pickle')
+
+    def save_df(self):
+        self.df.to_pickle('dataframe.pickle')
+
     
     # Проверка совпадения строк от 0.00 до 1.00
     def similarity(self, s1, s2):
@@ -54,6 +63,7 @@ class Parser(object):
             coeff = self.similarity(file, search_name + format_file)
             if (coeff>norm_coeff):
                 res.append(file)
+        print(search_name, res)        
         return res            
                 
     
