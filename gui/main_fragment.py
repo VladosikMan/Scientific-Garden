@@ -34,7 +34,7 @@ def function_kek(event):
         label_text = event.widget.cget("text")
         print(label_text)
         webbrowser.open(label_text,1)
-        urllib.request.urlretrieve(label_text, "file")
+        urllib.request.urlretrieve(label_text, "file.pdf")
         pass
 
 
