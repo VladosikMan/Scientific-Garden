@@ -11,6 +11,7 @@ from app_client import App_http_client
 from api_json import Scientific_api
 from pars import Parser
 
+#фрагмент где описывается ввод данных статьи
 class Article_fragment(customtkinter.CTk):
  
     def __init__(self, url):
@@ -62,7 +63,7 @@ class Article_fragment(customtkinter.CTk):
         self.destroy()
         pass
 
-
+#фрагмент где описывается элемент списка
 class Element_frame(customtkinter.CTkFrame):
     def __init__(self, master, value):
         super().__init__(master, bg_color="yellow")
@@ -75,7 +76,7 @@ class Element_frame(customtkinter.CTkFrame):
        
         self.link = customtkinter.CTkLabel(self,text=value.link)
 
-        self.link.bind("<Button-1>", function_kek)
+        self.link.bind("<Button-1>", self.function_kek)
         self.summary = customtkinter.CTkTextbox(self,width=600)
         
         self.summary.insert("1.0", value.summary, None)
@@ -86,28 +87,33 @@ class Element_frame(customtkinter.CTkFrame):
         self.link.grid(row=3, column=0, padx=10, pady=(10, 0), sticky="w")
         self.summary.grid(row=4, column=0, padx=10, pady=(10, 0), sticky="w")
         
-def function_kek(event):
-        #label_text = event.widget.cget("text")
-        #print(label_text)
-        #webbrowser.open(label_text,1)
-        #urllib.request.urlretrieve(label_text, "file.pdf")
-        create_window(event.widget.cget("text"))
+    def function_kek(self,event):
+        self.create_window(event.widget.cget("text"))
         pass
 
-def create_window(url):
-    article_fragment = Article_fragment(url)
-    article_fragment.mainloop()
-    pass
+    def create_window(url):
+        article_fragment = Article_fragment(url)
+        article_fragment.mainloop()
+        pass
 
-
+#фрагмент с настройками, по сути бесполезен
 class Settings_frame(customtkinter.CTkFrame):
     def __init__(self, master):
         super().__init__(master, bg_color="yellow")
+        self.grid_columnconfigure(0, weight=1)
+        self.name_app = customtkinter.CTkLabel(self,text="Scientific Garden",font=("Courier", 18))
+        self.buttont_settings = customtkinter.CTkButton(self, text="Настройки")
+        self.button_exit = customtkinter.CTkButton(self, text="Выход")
+        self.text_app = customtkinter.CTkTextbox(self,height=600)
+        
+        self.text_app.insert("1.0","Тут текст с крактим экскурсом как пользоваться программой", None)
 
-        self.buttont = customtkinter.CTkButton(self, text="Выход")
-        self.buttont.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="w")
+        self.name_app.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="we")
+        self.buttont_settings.grid(row=1, column=0, padx=10, pady=(20, 0), sticky="we")
+        self.button_exit.grid(row=2, column=0, padx=10, pady=(20, 0), sticky="we")
+        self.text_app.grid(row=3, column=0, padx=10, pady=(20, 0), sticky="we")
 
-
+#фрагмент с поисковой строкой и кнопкой
 class  Search_line_frame(customtkinter.CTkFrame):
     def __init__(self, master):
         super().__init__(master, bg_color="blue")
@@ -135,6 +141,8 @@ class List_result_frame(customtkinter.CTkScrollableFrame):
             self.checkboxes.append(element_frame)
 
 
+
+#фрагмент с параметрами поиска
 class  Params_frame(customtkinter.CTkFrame):
     def __init__(self, master):
         super().__init__(master, bg_color="red")
@@ -149,7 +157,7 @@ class  Params_frame(customtkinter.CTkFrame):
         self.entry_year_2= customtkinter.CTkEntry(self)
         self.entry_year_2.grid(row=2, column=1)
 
-
+#фрагмент с поиском
 class  Main_frame(customtkinter.CTkFrame):
     def __init__(self, master):
         super().__init__(master, bg_color="white")
