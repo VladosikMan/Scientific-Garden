@@ -1,12 +1,15 @@
 import sys
 sys.path.insert(0, 'http')
 sys.path.insert(1, 'data')
+sys.path.insert(2, 'parser')
+
 import webbrowser
 import urllib.request
 import customtkinter 
 from constants import Constants
 from app_client import App_http_client
 from api_json import Scientific_api
+from pars import Parser
 
 class Article_fragment(customtkinter.CTk):
  
@@ -44,15 +47,17 @@ class Article_fragment(customtkinter.CTk):
         self.cancel_button.grid(row=4, column=0, padx=10, pady=(10, 0), sticky="w")  
         self.save_button.grid(row=4, column=1, padx=10, pady=(10, 0), sticky="w") 
 
-       
-
+    
     def save_article(self):
+        parser.df.loc[len(parser.df.index )] = [self.author_entry.get(),self.title_entry.get(),self.data_entry.get(),self.h_entry.get()]
+        print(parser.df)
         webbrowser.open(self.url,1)
         urllib.request.urlretrieve(self.url, f"article/{self.title_entry.get()}.pdf")
         self.destroy()
         pass
 
     def destroy_fragment(self):
+    
         self.destroy()
         pass
 
@@ -115,8 +120,6 @@ class  Search_line_frame(customtkinter.CTkFrame):
         self.buttont_request.grid(row=0, column=1, padx=10, pady=(10, 0))
     
 
-
-
 #список элементов
 class List_result_frame(customtkinter.CTkScrollableFrame):
     def __init__(self, master,title, values):
@@ -129,8 +132,6 @@ class List_result_frame(customtkinter.CTkScrollableFrame):
             element_frame = Element_frame(self, value)
             element_frame.grid(row=i, column=0, padx=10, pady=(10, 0), sticky="nsew")
             self.checkboxes.append(element_frame)
-
-    
 
 
 class  Params_frame(customtkinter.CTkFrame):
@@ -190,11 +191,17 @@ class  Main_frame(customtkinter.CTkFrame):
         self.list_result_frame.grid(row=0, column=0,  sticky="nsew")
 
         pass
+
+
+
 class Main_fragment_gui(customtkinter.CTk):
  
     def __init__(self):
         super().__init__()
         self.constants = Constants() 
+
+
+
         self.app_client = App_http_client()  
         self.title(self.constants.name_application)
         self.geometry("1280x720")
@@ -211,7 +218,7 @@ class Main_fragment_gui(customtkinter.CTk):
 
         self.settings_frame.grid(row=0, column=0, sticky = "nsew")
         self.main_frame.grid(row=0, column=1,sticky="nsew")
-
-
-def callback_search():
-    pass
+ 
+   
+parser = Parser()
+print(parser.df)
