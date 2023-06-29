@@ -15,15 +15,28 @@ class Scientific_api(object):
         for i, value in enumerate(result):
             #print(value)
             sc_api = Scientific_api()
-           
-            sc_api.title = value['title']
-            sc_api.authors = value['publication_info']
-            sc_api.link = value['link']
+            try:
+                sc_api.title = value['title']
+            except Exception:
+                pass
+            try:
+                sc_api.authors = value['publication_info']
+            except Exception:
+                pass
+            try:
+                sc_api.link = value['link']
+            except Exception:
+                pass
             try:
                 sc_api.type = value['type']
             except Exception:
                 pass
-            sc_api.summary = value['snippet']
+
+            try:
+                sc_api.summary = value['snippet']
+            except Exception:
+                pass
+        
             list_api.append(sc_api)
         
         print(len(list_api))
