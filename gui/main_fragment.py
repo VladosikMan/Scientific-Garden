@@ -7,6 +7,56 @@ import customtkinter
 from constants import Constants
 from app_client import App_http_client
 from api_json import Scientific_api
+
+class Article_fragment(customtkinter.CTk):
+ 
+    def __init__(self, url):
+        super().__init__()
+      
+        self.title("Фрагмент")
+        self.geometry("400x300")
+        self.url = url
+        print(url)
+        self.author_label = customtkinter.CTkLabel(self,text="Автор")  
+        self.author_entry = customtkinter.CTkEntry(self)   
+        self.author_label.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="w")  
+        self.author_entry.grid(row=0, column=1, padx=10, pady=(10, 0), sticky="w")  
+
+        self.title_label = customtkinter.CTkLabel(self,text="Название статье")  
+        self.title_entry = customtkinter.CTkEntry(self)   
+        self.title_label.grid(row=1, column=0, padx=10, pady=(10, 0), sticky="w")  
+        self.title_entry.grid(row=1, column=1, padx=10, pady=(10, 0), sticky="w") 
+
+        self.data_label = customtkinter.CTkLabel(self,text="Дата 12.06.23")  
+        self.data_entry = customtkinter.CTkEntry(self)   
+        self.data_label.grid(row=2, column=0, padx=10, pady=(10, 0), sticky="w")  
+        self.data_entry.grid(row=2, column=1, padx=10, pady=(10, 0), sticky="w") 
+
+
+        self.h_label = customtkinter.CTkLabel(self,text="Индекс Хирша")  
+        self.h_entry = customtkinter.CTkEntry(self)   
+        self.h_label.grid(row=3, column=0, padx=10, pady=(10, 0), sticky="w")  
+        self.h_entry.grid(row=3, column=1, padx=10, pady=(10, 0), sticky="w") 
+
+
+        self.cancel_button = customtkinter.CTkButton(self, text="Отменить", command=self.destroy_fragment)
+        self.save_button = customtkinter.CTkButton(self, text="Сохранить", command=self.save_article)
+        self.cancel_button.grid(row=4, column=0, padx=10, pady=(10, 0), sticky="w")  
+        self.save_button.grid(row=4, column=1, padx=10, pady=(10, 0), sticky="w") 
+
+       
+
+    def save_article(self):
+        webbrowser.open(self.url,1)
+        urllib.request.urlretrieve(self.url, f"article/{self.title_entry.get()}.pdf")
+        self.destroy()
+        pass
+
+    def destroy_fragment(self):
+        self.destroy()
+        pass
+
+
 class Element_frame(customtkinter.CTkFrame):
     def __init__(self, master, value):
         super().__init__(master, bg_color="yellow")
@@ -31,11 +81,17 @@ class Element_frame(customtkinter.CTkFrame):
         self.summary.grid(row=4, column=0, padx=10, pady=(10, 0), sticky="w")
         
 def function_kek(event):
-        label_text = event.widget.cget("text")
-        print(label_text)
-        webbrowser.open(label_text,1)
-        urllib.request.urlretrieve(label_text, "file.pdf")
+        #label_text = event.widget.cget("text")
+        #print(label_text)
+        #webbrowser.open(label_text,1)
+        #urllib.request.urlretrieve(label_text, "file.pdf")
+        create_window(event.widget.cget("text"))
         pass
+
+def create_window(url):
+    article_fragment = Article_fragment(url)
+    article_fragment.mainloop()
+    pass
 
 
 class Settings_frame(customtkinter.CTkFrame):
